@@ -1,11 +1,12 @@
 Ppmm::Application.routes.draw do
-  get "static_pages/inicio"
 
-  get "static_pages/ayuda"
+  get "users/new"
 
-  get "static_pages/empresa"
+	root to: 'static_pages#inicio'
 
-  get "static_pages/contacto"
+	match '/ayuda', to: 'static_pages#ayuda'
+	match '/empresa', to: 'static_pages#empresa'
+	match '/contacto', to: 'static_pages#contacto'
 
   # The priority is based upon order of creation:
   # first created -> highest priority.
