@@ -6,8 +6,8 @@ class DatasetsController < ApplicationController
 	end
 
 	def create
-		@dataset = current_user.build_dataset(params[:dataset])
-		if @dataset.save
+		@result = Dataset.import(params[:file], current_user)
+		if @result == 1
 			flash[:success] = "Conjunto de datos creado."
 			redirect_to dataset_path(current_user)
 		else
@@ -17,6 +17,15 @@ class DatasetsController < ApplicationController
 	end
 
 	def show
+		@instance_size = current_user.dataset.instance_size.split(",").map(&:to_i)
+		@cavities = current_user.dataset.cavities.split(",").map(&:to_i)
+		@batch_time = current_user.dataset.batch_time.split(",").map(&:to_f)
+		@products_composition = current_user.dataset.products_composition.split(",").map(&:to_i)
+		@install_time = current_user.dataset.install_time.split(",").map(&:to_f)
+		@velocity = current_user.dataset.velocity.split(",").map(&:to_f)
+		@demand = current_user.dataset.demand.split(",").map(&:to_i)
+		@machine_time = current_user.dataset.machine_time.split(",").map(&:to_f)
+		gon.instance = @instance_size
 		if current_user.admin?
 			@user = User.find(params[:id])
 			@dataset = @user.dataset

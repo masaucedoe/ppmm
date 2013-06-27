@@ -6,8 +6,8 @@ class DatasetsController < ApplicationController
 	end
 
 	def create
-		@dataset = current_user.build_dataset(params[:dataset])
-		if @dataset.save
+		@result = Dataset.import(params[:file], current_user)
+		if @result == 1
 			flash[:success] = "Conjunto de datos creado."
 			redirect_to dataset_path(current_user)
 		else
@@ -29,6 +29,18 @@ class DatasetsController < ApplicationController
 	def edit
 		@user = current_user
 		@dataset = @user.dataset
+	end
+
+	def update
+		@user = current_user
+		@dataset = @user.dataset
+		if @dataset.update_attributes(params[:dataset])
+			flash[:success] = "Conjunto de datos actualizado."
+			redirect_to dataset_path(current_user)
+		else
+			flash[:error] = "La información está incompleta. No es posible actualizar el conjunto de datos."
+			render 'edit'
+		end
 	end
 end
 

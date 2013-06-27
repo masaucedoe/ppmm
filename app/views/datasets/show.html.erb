@@ -1,32 +1,206 @@
 <% provide(:title, "#{current_user.name} | Conjunto de datos") %>
-<div class="row">
-	<aside class="span4">
-		<section>
-			<h1>
-				<%= gravatar_for @user %>
-				<%= @user.name %>
-			</h1>
-			<%= @user.company %>
-			</br></br></br>
-			<p>
-				<b>Tamaño de instancia:</b>
-				<%= @user.dataset.instance_size %></br>
-				<b>Número de cavidades:</b>
-				<%= @user.dataset.cavities %></br>
-				<b>Tiempo de lote:</b>
-				<%= @user.dataset.batch_time %></br>
-				<b>Composición de productos:</b>
-				<%= @user.dataset.products_composition %></br>
-				<b>Tiempo de instalación de moldes:</b>
-				<%= @user.dataset.install_time %></br>
-				<b>Velocidad de procesamiento:</b>
-				<%= @user.dataset.velocity %></br>
-				<b>Demanda de productos:</b>
-				<%= @user.dataset.demand %></br>
-				<b>Tiempo máquina disponible:</b>
-				<%= @user.dataset.machine_time %></br>
-			</p>
-		</section>
-	</aside>
+
+<div class="tabbable"> <!-- Required for left/right tabs -->
+	<ul class="nav nav-tabs">
+		<li class="active"><a href="#tab1" data-toggle="tab">Cavidades</a></li>
+		<li><a href="#tab2" data-toggle="tab">Tiempo lote</a></li>
+		<li><a href="#tab3" data-toggle="tab">Composición productos</a></li>
+		<li><a href="#tab4" data-toggle="tab">Tiempo de instalación</a></li>
+		<li><a href="#tab5" data-toggle="tab">Velocidad</a></li>
+		<li><a href="#tab6" data-toggle="tab">Demanda</a></li>
+		<li><a href="#tab7" data-toggle="tab">Tiempo máquina</a></li>
+	</ul>
+	<div class="tab-content">
+
+		<div class="tab-pane active" id="tab1"> <!-- Active pane -->
+			<hr style="border: 1px dashed #000;" />
+			<h3>Número de cavidades.</h3>
+			<% @instance_size[3].times.each do |m| %> <!-- For each machine -->
+				<table id= <%= "cavities_" + m.to_s %> class="display" >
+					<thead>
+						<h4> <%= "Máquina " + (m + 1).to_s %> </h4>
+						<tr align="center">
+							<th> Molde/Pieza </th> <!-- Label -->
+							<% @instance_size[1].times.each do |i| %> <!-- For each piece -->
+								<th> <%= i + 1 %> </th> <!-- Label (piece) -->
+							<% end %>
+						</tr>
+					</thead>
+
+					<tbody>
+						<% @instance_size[2].times.each do |j| %> <!-- For each mold -->
+							<tr align="center">
+							<th> <%= j + 1 %> </th> <!-- Label (mold) -->
+							<% @instance_size[1].times.each do |i| %> <!-- For each piece -->
+								<td> <%= @cavities[@instance_size[1] * @instance_size[2] * m + @instance_size[1] * j + i] %> </td> <!-- Prints each mold-piece pair -->
+							<% end %>
+							</tr>
+						<% end %>
+					</tbody>
+				</table>
+			<% end %>
+			<hr style="border: 1px dashed #000;" />
+		</div>
+
+		<div class="tab-pane" id="tab2"> <!-- Pane change -->
+			<hr style="border: 1px dashed #000;" />
+			<h3>Tiempo de lote.</h3>
+			<% @instance_size[3].times.each do |m| %> <!-- For each machine -->
+				<table id= <%= "batch_time_" + m.to_s %> class="display">
+					<thead>
+						<h4> <%= "Máquina " + (m + 1).to_s %> </h4>
+						<tr align="center">
+							<th> Molde/Pieza </th> <!-- Label -->
+							<% @instance_size[1].times.each do |i| %> <!-- For each piece -->
+								<th> <%= i + 1 %> </th> <!-- Label (piece) -->
+							<% end %>
+						</tr>
+					</thead>
+
+					<tbody>
+						<% @instance_size[2].times.each do |j| %> <!-- For each mold -->
+							<tr align="center">
+							<th> <%= j + 1 %> </th> <!-- Label (mold) -->
+							<% @instance_size[1].times.each do |i| %> <!-- For each piece -->
+								<td> <%= @batch_time[@instance_size[1] * @instance_size[2] * m + @instance_size[1] * j + i] %> </td> <!-- Prints each mold-piece pair -->
+							<% end %>
+							</tr>
+						<% end %>
+					</tbody>
+				</table>
+			<% end %>
+			<hr style="border: 1px dashed #000;" />
+		</div>
+
+		<div class="tab-pane" id="tab3"> <!-- Pane change -->
+			<hr style="border: 1px dashed #000;" />
+			<h3>Composición de productos.</h3>
+			<table id="products_composition" class="display">
+				<thead>
+					<tr align="center">
+						<th> Producto/Pieza </th> <!-- Label -->
+						<% @instance_size[1].times.each do |i| %> <!-- For each piece -->
+							<th> <%= i + 1 %> </th> <!-- Label (piece) -->
+						<% end %>
+					</tr>
+				</thead>
+
+				<tbody>
+					<% @instance_size[0].times.each do |p| %> <!-- For each product -->
+						<tr align="center">
+						<th> <%= p + 1 %> </th> <!-- Label (product) -->
+						<% @instance_size[1].times.each do |i| %> <!-- For each piece -->
+							<td> <%= @products_composition[i + p * @instance_size[1]] %> </td> <!-- Prints each product-piece pair -->
+						<% end %>
+						</tr>
+					<% end %>
+				</tbody>
+			</table>
+			<hr style="border: 1px dashed #000;" />
+		</div>
+
+		<div class="tab-pane" id="tab4"> <!-- Pane change -->
+			<hr style="border: 1px dashed #000;" />
+			<h3>Tiempo de instalación de moldes.</h3>
+			<table id="install_time" class="display">
+				<thead>
+					<tr align="center">
+						<th> Molde/Maquina </th> <!-- Label -->
+						<% @instance_size[3].times.each do |k| %> <!-- For each machine -->
+							<th> <%= k + 1 %> </th> <!-- Label (machine) -->
+						<% end %>
+					</tr>
+				</thead>
+
+				<tbody>
+					<% @instance_size[2].times.each do |j| %> <!-- For each mold -->
+						<tr align="center">
+						<th> <%= j + 1 %> </th> <!-- Label (mold) -->
+						<% @instance_size[3].times.each do |k| %> <!-- For each machine -->
+							<td> <%= @install_time[k + j * @instance_size[3]] %> </td> <!-- Prints each mold-machine pair -->
+						<% end %>
+						</tr>
+					<% end %>
+				</tbody>
+			</table>
+			<hr style="border: 1px dashed #000;" />
+		</div>
+
+		<div class="tab-pane" id="tab5"> <!-- Pane change -->
+			<hr style="border: 1px dashed #000;" />
+			<h3>Velocidad de procesamiento.</h3>
+			<table id="velocity" class="display">
+				<thead>
+					<tr align="center">
+						<th> Producto </th> <!-- Label -->
+						<% @instance_size[0].times.each do |p| %> <!-- For each product -->
+							<th> <%= p + 1 %> </th> <!-- Label (product) -->
+						<% end %>
+					</tr>
+				</thead>
+
+				<tbody>
+					<tr align="center">
+						<th> Velocidad </th> <!-- Label (title) -->
+						<% @instance_size[0].times.each do |p| %> <!-- For each product -->
+							<td> <%= @velocity[p] %> </td> <!-- Prints each product -->
+						<% end %>
+					</tr>
+				</tbody>
+			</table>
+			<hr style="border: 1px dashed #000;" />
+		</div>
+
+		<div class="tab-pane" id="tab6"> <!-- Pane change -->
+			<hr style="border: 1px dashed #000;" />
+			<h3>Demanda de productos.</h3>
+			<table id="demand" class="display">
+				<thead>
+					<tr align="center">
+						<th> Producto </th> <!-- Label -->
+						<% @instance_size[0].times.each do |p| %> <!-- For each product -->
+							<th> <%= p + 1 %> </th> <!-- Label (product) -->
+						<% end %>
+					</tr>
+				</thead>
+
+				<tbody>
+					<tr align="center">
+						<th> Demanda </th> <!-- Label (title) -->
+						<% @instance_size[0].times.each do |p| %> <!-- For each product -->
+							<td> <%= @demand[p] %> </td> <!-- Prints each product -->
+						<% end %>
+					</tr>
+				</tbody>
+			</table>
+			<hr style="border: 1px dashed #000;" />
+		</div>
+
+		<div class="tab-pane" id="tab7"> <!-- Pane change -->
+			<hr style="border: 1px dashed #000;" />
+			<h3>Tiempo máquina disponible.</h3>
+			<table id="machine_time" class="display">
+				<thead>
+					<tr align="center">
+						<th> Máquina </th> <!-- Label -->
+						<% @instance_size[3].times.each do |k| %> <!-- For each product -->
+							<th> <%= k + 1 %> </th> <!-- Label (product) -->
+						<% end %>
+					</tr>
+				</thead>
+
+				<tbody>
+					<tr align="center">
+						<th> Tiempo máquina </th> <!-- Label (title) -->
+						<% @instance_size[3].times.each do |k| %> <!-- For each product -->
+							<td> <%= @machine_time[k] %> </td> <!-- Prints each product -->
+						<% end %>
+					</tr>
+				</tbody>
+			</table>
+			<hr style="border: 1px dashed #000;" />
+		</div>
+
+	</div>
 </div>
 
