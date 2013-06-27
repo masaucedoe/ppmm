@@ -1,6 +1,8 @@
 Ppmm::Application.routes.draw do
+
 	resources :users
 	resources :sessions, only: [:new, :create, :destroy]
+	resources :datasets, only: [:new, :create, :show, :edit, :update]
 
 	root to: 'static_pages#inicio'
 
@@ -12,6 +14,8 @@ Ppmm::Application.routes.draw do
 
 	match '/iniciar_sesion', to: 'sessions#new'
 	match '/cerrar_sesion', to: 'sessions#destroy', via: :delete
+
+	match '/carga_de_datos', to: 'datasets#new'
 
   # The priority is based upon order of creation:
   # first created -> highest priority.

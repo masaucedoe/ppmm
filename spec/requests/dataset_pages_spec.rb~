@@ -1,0 +1,25 @@
+#encoding: utf-8
+require 'spec_helper'
+
+describe "Data pages" do
+	subject { page }
+	let(:base_title) { "Aplicación PPMM" }
+
+	let(:user) { FactoryGirl.create(:user) }
+	before { sign_in user }
+	let(:dataset) { FactoryGirl.create(:dataset, user: user) }
+
+	describe "create page" do
+		before { visit carga_de_datos_path }
+			it { should have_selector('h1', text: 'Cargar datos') }
+			it { should have_selector('title', text: "#{base_title} | #{user.name} | Carga de datos") }
+	end
+
+	describe "data profile page" do
+		before { visit user_path(user) }
+
+		it { should have_selector('h1', text: user.name) }
+		it { should have_selector('title', text: user.name) }
+	end
+end
+

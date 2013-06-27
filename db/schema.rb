@@ -11,7 +11,23 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20130627060846) do
+ActiveRecord::Schema.define(:version => 20130627072306) do
+
+  create_table "datasets", :force => true do |t|
+    t.text     "instance_size"
+    t.text     "cavities"
+    t.text     "batch_time"
+    t.text     "products_composition"
+    t.text     "install_time"
+    t.text     "velocity"
+    t.text     "demand"
+    t.text     "machine_time"
+    t.integer  "user_id"
+    t.datetime "created_at",           :null => false
+    t.datetime "updated_at",           :null => false
+  end
+
+  add_index "datasets", ["user_id"], :name => "index_datasets_on_user_id"
 
   create_table "users", :force => true do |t|
     t.string   "name"

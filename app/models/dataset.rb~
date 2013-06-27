@@ -1,0 +1,7 @@
+class Dataset < ActiveRecord::Base
+	attr_accessible :instance_size, :cavities, :batch_time, :products_composition, :install_time, :velocity, :demand, :machine_time
+	belongs_to :user
+
+	validates :user_id, presence: true
+end
+

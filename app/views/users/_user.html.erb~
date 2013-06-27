@@ -4,9 +4,6 @@
 	<% if current_user.admin? && !current_user?(user) %>
 		| <%= link_to "Eliminar", user, method: :delete,
 			data: { confirm: "¿Eliminar #{user.name}?" } %>
-		<% unless user.dataset.nil? %>
-			| <%= link_to "Datos", dataset_path(user) %>
-		<% end %>
 	<% end %>
 </li>
 

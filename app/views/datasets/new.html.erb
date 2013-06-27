@@ -1,0 +1,35 @@
+<% provide(:title, "#{current_user.name} | Carga de datos") %>
+<h1>Cargar datos</h1>
+
+<div class="row">
+	<div class="span6 offset3">
+		<%= form_for(@dataset) do |f| %>
+			<%= f.label :instance_size, "Tamaño de instancia" %>
+			<%= f.text_field :instance_size %>
+
+			<%= f.label :cavities, "Número de cavidades" %>
+			<%= f.text_field :cavities %>
+
+			<%= f.label :batch_time, "Tiempo de lote" %>
+			<%= f.text_field :batch_time %>
+
+			<%= f.label :products_composition, "Composición de productos" %>
+			<%= f.text_field :products_composition %>
+
+			<%= f.label :install_time, "Tiempo de instalación de moldes" %>
+			<%= f.text_field :install_time %>
+
+			<%= f.label :velocity, "Velocidad de procesamiento" %>
+			<%= f.text_field :velocity %>
+
+			<%= f.label :demand, "Demanda de productos" %>
+			<%= f.text_field :demand %>
+
+			<%= f.label :machine_time, "Tiempo máquina disponible" %>
+			<%= f.text_field :machine_time %>
+
+			<%= f.submit "Crear conjunto de datos", class: "btn btn-large btn-primary" %>
+		<% end %>
+	</div>
+</div>
+

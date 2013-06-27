@@ -19,6 +19,7 @@ describe User do
 	it { should respond_to(:remember_token) }
 	it { should respond_to(:admin) }
 	it { should respond_to(:authenticate) }	
+	it { should respond_to(:dataset) }
 
 	it { should be_valid }
 	it { should_not be_admin }
@@ -126,6 +127,19 @@ describe User do
 	describe "remember token" do
 		before { @user.save }
 		its(:remember_token) { should_not be_blank }
+	end
+
+	describe "dataset association" do
+		before { @user.save }
+
+		it "should destroy the associated dataset" do
+			FactoryGirl.create(:dataset, user: @user)
+
+			dataset = @user.dataset.dup
+			@user.destroy
+			dataset.should_not be_nil
+			Dataset.find_by_id(dataset.id).should be_nil
+		end
 	end
 end
 

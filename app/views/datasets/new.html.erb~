@@ -1,0 +1,6 @@
+<% provide(:title, "#{current_user.name} | Carga de datos") %>
+<h1>Cargar datos</h1>
+<p>
+	Creación de un nuevo conjunto de datos.
+</p>
+

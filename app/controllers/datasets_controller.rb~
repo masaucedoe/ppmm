@@ -1,0 +1,18 @@
+#encoding: utf-8
+class DatasetsController < ApplicationController
+
+	def new
+		@dataset = current_user.build_dataset
+	end
+
+	def show
+		if current_user.admin?
+			@user = User.find(params[:id])
+			@dataset = @user.dataset
+		else
+			@user = current_user
+			@dataset = @user.dataset
+		end
+	end
+end
+
