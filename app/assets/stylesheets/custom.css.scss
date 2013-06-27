@@ -1,0 +1,156 @@
+@import "bootstrap";
+
+/* General */
+
+$grayMediumLight: #eaeaea; /* Color definition */
+
+/* Universal */
+
+html {
+	overflow-y: scroll; /* Vertical navigation bar */
+}
+
+body {
+	padding-top: 60px; /* Space between header and body */
+}
+
+section {
+	overflow: auto; /*  */
+}
+
+textarea {
+	resize: vertical; /*  */
+}
+
+.center {
+	text-align: center; /* Register button position */
+	h1 {
+		margin-bottom: 10px; /* Space between title and subtitle */
+	}
+}
+
+/* Buttons */
+
+.btn-primary {
+	background: $blue;
+	margin-top:10px;
+}
+
+/* Typography */
+
+h1, h2, h3, h4, h5, h6 {
+	line-height: 1; /* Space between text lines */
+}
+
+h1 { /* Typography of the h1 label (page title) */
+	font-size: 3em;
+	letter-spacing: -2px;
+	margin-bottom: 30px;
+	text-align: center;
+}
+
+h2 { /* Typography of the h2 label (page subtitle) */
+	font-size: 1.7em;
+	letter-spacing: -1px;
+	margin-bottom: 30px;
+	text-align: center;
+	font-weight: normal;
+	color: $grayLight;
+}
+
+h3 { /* Typography of the h3 label (table title) */
+	font-size: 1.7em;
+	border:1px solid #000000;
+	line-height: 1.7em;
+	letter-spacing: -1px;
+	margin-top: 20px;
+	margin-bottom: 35px;
+	text-align: center;
+	font-weight: normal;
+	color: black;
+	background-color: #CEECF5;
+}
+
+h4 { /* Typography of the h4 label (table subtitle) */
+	font-size: 1.7em;
+	line-height: 1.5em;
+	letter-spacing: -1px;
+	border-bottom:1px solid $grayLight;
+	margin-top: 40px;
+	margin-bottom: 10px;
+	text-align: center;
+	font-weight: normal;
+	color: $grayLight;
+}
+
+h5 { /* Typography of the h5 label (profile text) */
+	font-size: 1.5em;
+	letter-spacing: -1px;
+	margin-bottom: 30px;
+	text-align: center;
+	font-weight: normal;
+	color: $black;
+}
+
+h6 { /* Typography of the h6 label (profile text) */
+	font-size: 1.5em;
+	letter-spacing: -1px;
+	margin-bottom: 30px;
+	text-align: center;
+	font-weight: normal;
+	color: $grayLight;
+}
+
+p { /* Typography of the p label (paragraph) */
+	font-size: 1.1em;
+	line-height: 1.7em;
+}
+
+/* Header */
+
+.navbar-inner {
+  background: $black;
+}
+
+#logo {
+	float: left;
+	margin-right: 10px;
+	font-size: 1.7em;
+	color: $blue;
+	text-transform: uppercase;
+	letter-spacing: -1px;
+	padding-top: 9px;
+	font-weight: bold;
+	line-height: 1;
+	&:hover { /* When mouse on it */
+		color: white;
+		text-decoration: none;
+	}
+}
+
+/* Footer */
+
+footer {
+	margin-top: 45px;
+	padding-top: 5px;
+	border-top: 1px solid $grayMediumLight;
+	color: $blue;
+	a {
+		color: $blue;
+		&:hover { /* When mouse on it */
+			color: $grayDarker;
+		}
+	}	
+	small { 
+		float: left; 
+	}
+	ul {
+		float: right;
+		list-style: none;
+		li {
+			float: left;
+			margin-left: 10px;
+		}
+	}
+}
+
