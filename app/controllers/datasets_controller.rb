@@ -25,5 +25,22 @@ class DatasetsController < ApplicationController
 			@dataset = @user.dataset
 		end
 	end
+
+	def edit
+		@user = current_user
+		@dataset = @user.dataset
+	end
+
+	def update
+		@user = current_user
+		@dataset = @user.dataset
+		if @dataset.update_attributes(params[:dataset])
+			flash[:success] = "Conjunto de datos actualizado."
+			redirect_to dataset_path(current_user)
+		else
+			flash[:error] = "La información está incompleta. No es posible actualizar el conjunto de datos."
+			render 'edit'
+		end
+	end
 end
 

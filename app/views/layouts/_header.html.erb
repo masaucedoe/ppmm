@@ -10,7 +10,25 @@
 						<% if current_user.admin? %>
 							<li><%= link_to "Usuarios", users_path %></li>
 						<% end %>
-						<li><%= link_to "Datos", '#' %></li>
+						<li id="fat-menu" class="dropdown">
+							<a href="#" class="dropdown-toggle" data-toggle="dropdown">
+								Datos <b class="caret"></b>
+							</a>
+							<ul class="dropdown-menu">
+								<% unless prior_dataset? %>
+									<li><%= link_to "Cargar nuevo conjunto de datos", carga_de_datos_path(current_user) %></li>
+								<% end %>
+								<% if prior_dataset? %>
+									<li><%= link_to "Cargar nuevo conjunto", carga_de_datos_path(current_user),
+										:confirm => "Esta acción reemplaza el conjunto de datos actual. ¿Desea continuar?" %></li>
+									<li class="divider"></li>
+									<li>
+										<li><%= link_to "Mostrar conjunto de datos", dataset_path(current_user) %></li>
+										<li><%= link_to "Modificar conjunto de datos", edit_dataset_path(current_user) %></li>
+									</li>
+								<% end %>
+							</ul>
+						</li>
 						<li id="fat-menu" class="dropdown">
 							<a href="#" class="dropdown-toggle" data-toggle="dropdown">
 								Cuenta <b class="caret"></b>

@@ -63,5 +63,46 @@ describe "Data pages" do
 			end
 		end
 	end
+
+	describe "edit" do
+		before { visit edit_dataset_path(dataset) }
+
+		describe "page" do
+			it { should have_selector('h1', text: "Actualizar datos") }
+			it { should have_selector('title', text: "Actualización de datos") }
+		end
+
+		describe "with invalid information" do
+			before do
+				fill_in "Tamaño de instancia", with: ""
+				fill_in "Número de cavidades", with: dataset.cavities
+				fill_in "Tiempo de lote", with: dataset.batch_time
+				fill_in "Composición de productos", with: dataset.products_composition
+				fill_in "Tiempo de instalación de moldes", with: dataset.install_time
+				fill_in "Velocidad de procesamiento", with: dataset.velocity
+				fill_in "Demanda de productos", with: dataset.demand
+				fill_in "Tiempo máquina disponible", with: dataset.machine_time
+				click_button "Guardar cambios"
+			end
+
+			it { should have_selector('div.alert.alert-error', text: 'incompleta') }
+		end
+
+		describe "with valid information" do
+			before do
+				fill_in "Tamaño de instancia", with: dataset.instance_size
+				fill_in "Número de cavidades", with: dataset.cavities
+				fill_in "Tiempo de lote", with: dataset.batch_time
+				fill_in "Composición de productos", with: dataset.products_composition
+				fill_in "Tiempo de instalación de moldes", with: dataset.install_time
+				fill_in "Velocidad de procesamiento", with: dataset.velocity
+				fill_in "Demanda de productos", with: dataset.demand
+				fill_in "Tiempo máquina disponible", with: dataset.machine_time
+				click_button "Guardar cambios"
+			end
+
+			it { should have_selector('div.alert.alert-success', text: 'actualizado') }
+		end
+	end
 end
 

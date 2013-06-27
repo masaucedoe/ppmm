@@ -36,5 +36,8 @@ module SessionsHelper
 		session[:return_to] = request.url
 	end
 
+	def prior_dataset?
+		!current_user.dataset.nil?
+	end
 end
 
