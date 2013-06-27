@@ -7,6 +7,9 @@
 					<li><%= link_to "Inicio", root_path %></li>	<!-- Link to Inicio page. -->
 					<li><%= link_to "Ayuda", ayuda_path %></li>	<!-- Link to Ayuda page. -->
 					<% if signed_in? %>
+						<% if current_user.admin? %>
+							<li><%= link_to "Usuarios", users_path %></li>
+						<% end %>
 						<li><%= link_to "Datos", '#' %></li>
 						<li id="fat-menu" class="dropdown">
 							<a href="#" class="dropdown-toggle" data-toggle="dropdown">

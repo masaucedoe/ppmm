@@ -30,6 +30,16 @@ describe "Authentication" do
 			it { should have_link('Cerrar sesión', href: cerrar_sesion_path) }
 			it { should_not have_link('Iniciar sesión', href: iniciar_sesion_path) }
 
+			describe "as non-admin" do
+				it { should_not have_link('Usuarios', href: users_path) }
+			end
+
+			describe "as admin" do
+				let(:admin) { FactoryGirl.create(:admin) }
+				before { sign_in admin }
+				it { should have_link('Usuarios', href: users_path) }
+			end
+
 			describe "followed by signout" do
 				before { click_link "Cerrar sesión" }
 				it { should have_link('Iniciar sesión') }
@@ -71,6 +81,16 @@ describe "Authentication" do
 					before { put user_path(user) }
 					specify { response.should redirect_to(iniciar_sesion_path) }
 				end
+
+				describe "visiting the user index" do
+					before { visit users_path }
+					it { should have_selector('title', text: 'Iniciar sesión') }
+				end
+
+				describe "submitting a DELETE request to the Users#destroy action" do
+					before { delete user_path(user) }
+					specify { response.should redirect_to(iniciar_sesion_path) }
+				end
 			end
 		end
 
@@ -91,6 +111,22 @@ describe "Authentication" do
 
 			describe "submitting a PUT request to the Users#update action" do
 				before { put user_path(wrong_user) }
+				specify { response.should redirect_to(root_path) }
+			end
+		end
+
+		describe "as non-admin user" do
+			let(:user) { FactoryGirl.create(:user) }
+			let(:non_admin) { FactoryGirl.create(:user) }
+			before { sign_in non_admin }
+
+			describe "visiting the user index" do
+				before { visit users_path }
+				it { should_not have_selector('title', text: 'Lista de usuarios') }
+			end
+
+			describe "submitting a DELETE request to the Users#destroy action" do
+				before { delete user_path(user) }
 				specify { response.should redirect_to(root_path) }
 			end
 		end

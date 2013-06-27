@@ -5,6 +5,49 @@ describe "User pages" do
 	subject { page }
 	let(:base_title) { "Aplicación PPMM" }
 
+	describe "index" do
+		describe "as a non-admin user" do
+			let(:user) { FactoryGirl.create(:user) }
+			before { sign_in user }
+			it { should_not have_link('Usuarios') }
+
+			before { visit users_path }
+			it { should_not have_selector('title', text: 'Lista de usuarios') }
+			it { should_not have_selector('h1', text: 'Lista de usuarios') }
+		end
+
+		describe "as an admin user" do
+			let(:admin) { FactoryGirl.create(:admin) }
+			before { sign_in admin }
+			it { should have_link('Usuarios') }
+
+			before { visit users_path }
+			it { should have_selector('title', text: 'Lista de usuarios') }
+			it { should have_selector('h1', text: 'Lista de usuarios') }
+
+			describe "pagination" do
+				before(:all) { 30.times { FactoryGirl.create(:user) } }
+
+				it { should have_selector('div.pagination') }
+				it "should list each user" do
+					User.all[1..5].each do |user|
+						page.should have_selector('li', text: user.name)
+					end
+				end
+
+				describe "delete links" do
+					before { visit users_path }
+					it { should have_link('Eliminar', href: user_path(User.first)) }
+					it "should be able to delete another user" do
+						expect { click_link('Eliminar') }.to change(User, :count).by(-1)
+					end
+					it { should_not have_link('Eliminar', href: user_path(admin)) }
+					after(:all)	{ User.delete_all }
+				end
+			end
+		end
+	end
+
 	describe "signup page" do
 		before { visit registrarse_path }
 			it { should have_selector('h1', text: 'Registrarse') }

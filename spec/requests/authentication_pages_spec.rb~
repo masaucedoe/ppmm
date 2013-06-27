@@ -30,6 +30,16 @@ describe "Authentication" do
 			it { should have_link('Cerrar sesión', href: cerrar_sesion_path) }
 			it { should_not have_link('Iniciar sesión', href: iniciar_sesion_path) }
 
+			describe "as non-admin" do
+				it { should_not have_link('Usuarios', href: users_path) }
+			end
+
+			describe "as admin" do
+				let(:admin) { FactoryGirl.create(:admin) }
+				before { sign_in admin }
+				it { should have_link('Usuarios', href: users_path) }
+			end
+
 			describe "followed by signout" do
 				before { click_link "Cerrar sesión" }
 				it { should have_link('Iniciar sesión') }
@@ -40,6 +50,21 @@ describe "Authentication" do
 	describe "authorization" do
 		describe "for non-signed-in users" do
 			let(:user) { FactoryGirl.create(:user) }
+
+			describe "when attempting to visit a protected page" do
+				before do
+					visit edit_user_path(user)
+					fill_in "Correo electrónico", with: user.email.upcase
+					fill_in "Contraseña", with: user.password
+					click_button "Iniciar sesión"
+				end
+
+				describe "after signing in" do
+					it "should render the desired protected page" do
+						page.should have_selector('title', text: 'Edición del usuario')
+					end
+				end
+			end
 
 			describe "in the Users controller" do
 				describe "visiting the user page" do
@@ -54,6 +79,16 @@ describe "Authentication" do
 
 				describe "submitting to the update action" do
 					before { put user_path(user) }
+					specify { response.should redirect_to(iniciar_sesion_path) }
+				end
+
+				describe "visiting the user index" do
+					before { visit users_path }
+					it { should have_selector('title', text: 'Iniciar sesión') }
+				end
+
+				describe "submitting a DELETE request to the Users#destroy action" do
+					before { delete user_path(user) }
 					specify { response.should redirect_to(iniciar_sesion_path) }
 				end
 			end
