@@ -1,0 +1,20 @@
+<% provide(:title, "#{@user.name} | Perfil") %>
+<div class="row">
+	<aside class="span12">
+		<section>
+			<h1>
+				<%= gravatar_for @user %>
+				<%= @user.name %>
+			</h1>
+			<%= @user.company %>
+
+			<h4>Datos del perfil.</h4>
+
+				<h5 style="display:inline">Nombre: <h6 style="display:inline"><%= @user.name %>.</h6></h5><br><br>
+				<h5 style="display:inline">Compañía: <h6 style="display:inline"><%= @user.company %>.</h6></h5><br><br>
+				<h5 style="display:inline">Correo electrónico: <h6 style="display:inline"><%= @user.email %>.</h6></h5><br><br>
+				<h5 style="display:inline">Teléfono: <h6 style="display:inline"><%= @user.telephone %>.</h6></h5>
+		</section>
+	</aside>
+</div>
+

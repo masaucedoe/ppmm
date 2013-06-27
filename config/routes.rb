@@ -1,4 +1,6 @@
 Ppmm::Application.routes.draw do
+	resources :users
+
 	root to: 'static_pages#inicio'
 
 	match '/ayuda', to: 'static_pages#ayuda'
