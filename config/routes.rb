@@ -1,5 +1,6 @@
 Ppmm::Application.routes.draw do
 	resources :users
+	resources :sessions, only: [:new, :create, :destroy]
 
 	root to: 'static_pages#inicio'
 
@@ -8,6 +9,9 @@ Ppmm::Application.routes.draw do
 	match '/contacto', to: 'static_pages#contacto'
 
 	match '/registrarse', to: 'users#new'
+
+	match '/iniciar_sesion', to: 'sessions#new'
+	match '/cerrar_sesion', to: 'sessions#destroy', via: :delete
 
   # The priority is based upon order of creation:
   # first created -> highest priority.

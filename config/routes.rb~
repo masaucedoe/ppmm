@@ -1,4 +1,7 @@
 Ppmm::Application.routes.draw do
+	resources :users
+	resources :sessions, only: [:new, :create, :destroy]
+
 	root to: 'static_pages#inicio'
 
 	match '/ayuda', to: 'static_pages#ayuda'

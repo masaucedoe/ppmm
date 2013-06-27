@@ -59,6 +59,8 @@ describe "User pages" do
 				before { click_button submit }
 
 				it { should have_selector('title', text: "Usuario Prueba") }
+				it { should have_selector('div.alert.alert-success', text: 'Bienvenido') }
+				it { should have_link('Cerrar sesión') }
 			end
 		end
 	end

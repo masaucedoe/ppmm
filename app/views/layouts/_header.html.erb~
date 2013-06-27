@@ -5,9 +5,9 @@
 		<%= link_to "Logykopt", root_path, id: "logo" %>
 		<nav>
 			<ul class="nav pull-right">
-			<li><%= link_to "Ayuda", '#' %></li>	<!-- Link to Ayuda page. -->
-			<li><%= link_to "Acerca de nosotros", '#' %></li>	<!-- Link to Empresa page. -->
-			<li><%= link_to "Contacto", '#' %></li>	<!-- Link to Contacto page. -->
+			<li><%= link_to "Ayuda", ayuda_path %></li>	<!-- Link to Ayuda page. -->
+			<li><%= link_to "Acerca de nosotros", empresa_path %></li>	<!-- Link to Empresa page. -->
+			<li><%= link_to "Contacto", contacto_path %></li>	<!-- Link to Contacto page. -->
 			<li><%= link_to "Iniciar sesión", '#' %></li>	<!-- Link to Iniciar Sesión page. -->
 			 </ul>
 			</nav>

@@ -1,0 +1,6 @@
+#encoding: utf-8
+<% provide(:title, "Iniciar sesión") %>
+<h1>
+	Inicio de sesión
+</h1>
+
